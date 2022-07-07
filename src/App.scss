@@ -1,0 +1,65 @@
+// snap-scroll-wrapper에서 %높이를 사용하려면 여기서 먼저 높이를 지정해야함
+// body는 기본적으로 높이값이 없기 때문에 높이를 줘야함
+html, body {
+  height: 100%;
+}
+
+//body의 자식인 root도 height를 먹여줌
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+// header 높이 계산
+:root {
+  --header--height: 100px
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: gray;
+  height: var(--header--height);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: 2rem;
+  color: #ffffff;
+}
+
+.snap-scroll-wrapper {
+  position: relative;
+  // header가 fixed이므로 relative 속성을 주고 header 높이만큼 top 값을 부여
+  top: var(--header--height);
+  // header 높이를 제외한 나머지는 모두 높이
+  height: calc(100% - var(--header--height));
+  // y축 snap-scroll
+  scroll-snap-type: y mandatory;
+  overflow: auto;
+
+  .snap-scroll-item {
+    height: 80%;
+    width: 350px;
+    // 이미지 border 밖으로 나가는거 자르기
+    overflow: hidden;
+    background: black;
+    border-radius: 20px;
+    // item의 가운데 스크롤이 멈추게
+    scroll-snap-align: center;
+    // 가운데 정렬 및 위아래 margin
+    margin: 2rem auto;
+    img, video{
+      width: 100%;
+      height: 100%;
+      // 비율 유지하면서 최대한 포함 시키기 확대x
+      object-fit: contain;
+    }
+  }
+}
+
